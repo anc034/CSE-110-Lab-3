@@ -1,0 +1,9 @@
+select{
+    background-color: lightgrey;
+    width: 170px;
+}
+
+button{
+    display: block;
+    clear: both
+}
