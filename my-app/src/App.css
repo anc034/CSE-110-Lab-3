@@ -1,19 +1,4 @@
-.note-individual {
-  border: 1px solid black;
-  display: "flex";
-  flex-direction: column;
- }
- 
- .app-container {
-  display: "flex";
-  flex-direction: column;
- }
- .note-form {
-  display: "flex";
-  border: 1px solid black;
-  flex-direction: column;
- }
- body {
+body {
   margin: 20px;
   background-color: lightgrey;
  }
@@ -106,4 +91,8 @@
  .edit-buttons button:last-of-type {
   background-color: rgb(220, 89, 89);
   color: white;
+ }
+ .favorites{
+  max-width: fit-content;
+  white-space: pre-line;
  }

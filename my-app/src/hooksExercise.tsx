@@ -1,23 +1,27 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ThemeContext, themes } from "./themeContext";
+import App from './App';
 
 
-export function ClickCounter() {
+export function ClickCounter(title : string, likedNotes: string[], handleLike: React.Dispatch<React.SetStateAction<string[]>>) {
  const [liked, setLiked] = useState<boolean>(false);
+ const [icon, setIcon] = useState<string>("\u2661");
 
  const theme = useContext(ThemeContext);
 
- let icon : string = '\u2661';
-
  useEffect(() => {
   if(liked){
-    icon = '\u2665';
+    setIcon('\u2764\uFE0F');
+    likedNotes.push(title);
+    handleLike(likedNotes);
+
   }
   else{
-    icon = '\u2661';
+    setIcon('\u2661');
+    handleLike(likedNotes.filter(string => string !== title));
   }
-  console.log(liked);
 }, [liked]);
+
 
 return (
    <div
@@ -37,6 +41,7 @@ return (
 
 }
 
+
 // Wrapper component to provide context
 function ToggleTheme() {
   const [currentTheme, setCurrentTheme] = useState(themes.light);
@@ -44,11 +49,15 @@ function ToggleTheme() {
   const toggleTheme = () => {
     setCurrentTheme(currentTheme === themes.light ? themes.dark : themes.light);
   };
+
+  useEffect(() => {
+    document.body.style.backgroundColor = currentTheme.background;
+  }, [currentTheme]);
  
   return (
     <ThemeContext.Provider value={currentTheme}>
+      <App/>
       <button onClick={toggleTheme}> Toggle Theme </button>
-      <ClickCounter />
     </ThemeContext.Provider>
   );
  }
