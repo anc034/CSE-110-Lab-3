@@ -2,18 +2,22 @@ import React, { useState, useEffect, useContext } from 'react';
 import { ThemeContext, themes } from "./themeContext";
 import App from './App';
 
-
-export function ClickCounter(title : string, likedNotes: string[], handleLike: React.Dispatch<React.SetStateAction<string[]>>) {
+interface ClickCounterProps{
+  title : string;
+  likedNotes: string[];
+  handleLike: React.Dispatch<React.SetStateAction<string[]>>;
+}
+export function ClickCounter({title, likedNotes, handleLike} : ClickCounterProps) {
  const [liked, setLiked] = useState<boolean>(false);
  const [icon, setIcon] = useState<string>("\u2661");
+ 
 
  const theme = useContext(ThemeContext);
-
+ 
  useEffect(() => {
   if(liked){
     setIcon('\u2764\uFE0F');
-    likedNotes.push(title);
-    handleLike(likedNotes);
+    handleLike([...likedNotes, title]);
 
   }
   else{
@@ -21,7 +25,6 @@ export function ClickCounter(title : string, likedNotes: string[], handleLike: R
     handleLike(likedNotes.filter(string => string !== title));
   }
 }, [liked]);
-
 
 return (
    <div
