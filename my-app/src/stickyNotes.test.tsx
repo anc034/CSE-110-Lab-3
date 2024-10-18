@@ -29,5 +29,43 @@ describe("Create StickyNote", () => {
 
    expect(newNoteTitle).toBeInTheDocument();
    expect(newNoteContent).toBeInTheDocument();
+
  });
+
+ //Read
+ test("renders create note form", () => {
+  render(<StickyNotes />);
+
+  expect(screen.getByText("test note 1 title")).toBeInTheDocument();
+  expect(screen.getByText("test note 1 content")).toBeInTheDocument();
+  expect(screen.getByText("other")).toBeInTheDocument();
+
+  expect(screen.getByText("test note 3 title")).toBeInTheDocument();
+  expect(screen.getByText("test note 3 content")).toBeInTheDocument();
+  expect(screen.getByText("work")).toBeInTheDocument();
+
+ });
+
+ //Update
+ test("Check if updated", () => {
+  render(<StickyNotes />);
+
+
+
+ });
+
+ //Delete
+ test("Check if note deleted", () => {
+  render(<StickyNotes />);
+
+  const noteTitle = screen.getByText("test note 5 title");
+  //logic here is that the method where u find the delete button goes in the () of closest and what you're looking for is the querySelector (button here = first button)
+  const deleteButton = screen.getAllByText("x")[0];
+
+  fireEvent.click(deleteButton);
+
+  expect(screen.queryByText("test note 1 title")).not.toBeInTheDocument();
+
+ });
+
 });
