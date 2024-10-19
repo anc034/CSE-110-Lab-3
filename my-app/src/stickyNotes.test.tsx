@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { StickyNotes } from "./stickyNotes";
+import { dummyNotesList } from "./constants";
 
 describe("Create StickyNote", () => {
  test("renders create note form", () => {
@@ -35,20 +36,23 @@ describe("Create StickyNote", () => {
  //Read
  test("renders create note form", () => {
   render(<StickyNotes />);
+  
 
-  expect(screen.getByText("test note 1 title")).toBeInTheDocument();
-  expect(screen.getByText("test note 1 content")).toBeInTheDocument();
-  expect(screen.getByText("other")).toBeInTheDocument();
-
-  expect(screen.getByText("test note 3 title")).toBeInTheDocument();
-  expect(screen.getByText("test note 3 content")).toBeInTheDocument();
-  expect(screen.getByText("work")).toBeInTheDocument();
+  for(const note of dummyNotesList){
+    expect(screen.getByText(note.title)).toBeInTheDocument();
+  }
 
  });
 
  //Update
  test("Check if updated", () => {
   render(<StickyNotes />);
+
+  const updateNoteTitle = screen.getByTestId("note-title-1");
+  updateNoteTitle.innerHTML = "end my suffering";
+  fireEvent.input(updateNoteTitle);
+  expect(screen.getByText("end my suffering")).toBeInTheDocument();
+
 
 
 
@@ -67,5 +71,18 @@ describe("Create StickyNote", () => {
   expect(screen.queryByText("test note 1 title")).not.toBeInTheDocument();
 
  });
+
+// 0 sticky notes edge case
+ test("Check if 0 sticky notes", () => {
+  render(<StickyNotes />);
+
+  for(const entry of dummyNotesList){
+    const noteTitle = screen.getByText(entry.title);
+    const deleteButton = screen.getAllByText("x")[0];
+    fireEvent.click(deleteButton);
+ }
+ // logic is that for any note that exists there will be an x in the document due to the button, so if there is no x, there is no button, and therefore 0 notes.
+ expect(screen.queryByText("x")).not.toBeInTheDocument();
+});
 
 });

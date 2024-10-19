@@ -95,7 +95,7 @@ export const StickyNotes = () => {
                 x
               </button>
             </div>
-            <h2 contentEditable="true"> {note.title} </h2>
+            <h2 contentEditable="true" data-testid = {`note-title-${note.id}`}> {note.title} </h2>
             <p contentEditable="true"> {note.content} </p>
             <p contentEditable="true"> {note.label} </p>
           </div>

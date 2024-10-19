@@ -48,8 +48,8 @@ export function ToDoList() {
 
 function ListItem(item: GroceryItem, changeHandler: ChangeEventHandler) {
  return (
-   <div>
-     <input
+   <div data-testid = "checkboxes">
+     <input 
        type="checkbox"
        onChange={changeHandler}
        checked={item.isPurchased}
